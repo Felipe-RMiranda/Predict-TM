@@ -1,12 +1,12 @@
 body {
-  margin: 0;
+  margin: 0px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f2f5;
+  background: #0b1a19;
   align-items: center;
 }
 
 .app-container {
-  padding: 2rem;
+  padding: 1%;
   max-width: 900px;
   margin: auto;
   display: flex;
@@ -15,44 +15,26 @@ body {
 }
 
 .card {
+  background-color: #ccc;
   align-items: center;
-  padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
-
-.dashboard-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
+.head {
+  padding: 10%;
+  color: white;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  background-image: url(/static/wallpaper-neurology.jpg);
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
 }
-.image-preview {
-  max-height: 300px;
-  object-fit: contain;
-  border-radius: 10px;
-  border: 1px solid #dee2e6;
-}
-
-.box-upload {
-  border: 2px dashed #ccc;
-  padding: 30px;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.box-upload:hover {
-  background: #f9f9f9;
-}
-
-.card h2 {
-  margin-bottom: 1rem;
-  color: #333;
-  text-align: center;
+.card-content {
+  padding: 10px;
 }
 
 input[type="text"],
@@ -90,57 +72,60 @@ input[type="file"] {
   background-color: #0056b3;
 }
 
-.dashboard {
-  background: #ffffff;
-  padding: 2rem;
+.dashboard-container {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  align-items: center;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.info-cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.info {
-  background: #f8f9fa;
-  padding: 1rem;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.result-bar {
-  margin-bottom: 2rem;
-}
-
-.result-label {
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.bar-container {
-  height: 20px;
-  background: #e9ecef;
-  border-radius: 10px;
   overflow: hidden;
 }
 
-.bar-fill {
-  height: 100%;
-  width: 72%;
-  background: #dc3545;
-  transition: width 0.3s ease;
+.deshboard-head {
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.result-content {
+  width: 90%;
+}
+.inf {
+  display: flex;
+  gap: 10px;
+}
+.inf p {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
-.notes h4 {
-  margin-bottom: 0.5rem;
+.values {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid black;
 }
-
-.notes p {
-  color: #555;
-  line-height: 1.5;
+.values div {
+  text-align: center;
+}
+.status {
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid black;
+  flex: 1;
+}
+.image-preview {
+  width: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid red;
 }
 
 canvas {
@@ -151,7 +136,7 @@ canvas {
   max-width: 200px;
 }
 
-.bold-text {
-  font-weight: bold;
-  color: black;
+.alert-info {
+  margin-top: 15px;
+  width: 90%;
 }

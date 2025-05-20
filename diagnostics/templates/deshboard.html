@@ -14,51 +14,43 @@
   <body>
     <div class="app-container">
       <div class="dashboard-container">
-        <img
-          src="{% static 'cerebro.png' %}"
-          alt="Logo"
-          style="height: 100px; margin-right: 10px"
-        />
-        <h2 class="mb-4">Diagnóstico por Inteligência Artificial</h2>
-
-        <div class="row mb-3">
-          <div class="col-md-4">
-            <strong>Nome:</strong>
-            <p>{{ name }}</p>
-          </div>
-          <div class="col-md-4">
-            <strong>Idade:</strong>
-            <p>{{ age }}</p>
-          </div>
-          <div class="col-md-4">
-            <strong>Sexo:</strong>
-            <p>{{ gender }}</p>
-          </div>
-        </div>
-
-        <div class="mb-4 text-center">
-          <strong>Imagem da Tomografia:</strong><br />
+        <div class="deshboard-head">
           <img
-            src="{{ img }}"
-            alt="Imagem enviada"
-            class="img-fluid image-preview mt-2"
+            src="{% static 'cerebro.png' %}"
+            alt="Logo"
+            style="height: 100px"
           />
+          <h2>Diagnóstico por Inteligência Artificial</h2>
         </div>
-
-        <div class="row mb-3">
-          <div style="text-align: center" class="col-md-6">
-            <strong>Estimativa de presença de TM:</strong>
-            <canvas id="probabilityChart" width="150" height="150"></canvas>
-            <p>{{ probability }}%</p>
+        <div class="result-content">
+          <div class="inf">
+            <p><strong>Nome: </strong>{{ name }}</p>
+            <p><strong>Idade: </strong>{{ age }}</p>
+            <p><strong>Sexo: </strong>{{ gender }}</p>
           </div>
 
-          <div class="col-md-6">
-            <strong>Status:</strong>
-            <p
-              class="{% if status == 'Cérebro saudável' %}text-success{% else %}text-danger{% endif %}"
-            >
-              {{ status }}
-            </p>
+          <strong>(TM) Encefálico:</strong><br />
+
+          <div class="values">
+            <div style="flex: 2">
+              <img
+                src="{{ img }}"
+                alt="Imagem enviada"
+                class="img-fluid image-preview mt-2"
+              />
+            </div>
+
+            <div class="status">
+              <strong>Estimativa de presença de (TM):</strong>
+              <canvas id="probabilityChart" width="150" height="150"></canvas>
+              <p><strong>{{ probability }}%</strong></p>
+              <p
+                class="{% if status == 'Cérebro saudável' %}text-success{% else %}text-danger{% endif %}"
+              >
+                <strong style="color: black">Status: </strong>
+                {{ status }}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -67,10 +59,7 @@
           <p>{{ result }}</p>
         </div>
 
-        <a
-          style="background-color: rgb(109, 109, 207)"
-          href="/"
-          class="btn btn-secondary"
+        <a style="background-color: #007bff" href="/" class="btn btn-secondary"
           >⬅ Nova Análise</a
         >
       </div>

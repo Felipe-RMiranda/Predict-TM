@@ -15,94 +15,72 @@
   <body>
     <div class="app-container">
       <div class="card">
-        <img
-          src="{% static 'cerebro.png' %}"
-          alt="Logo"
-          style="height: 100px; margin-right: 10px"
-        />
-        <h3>Análise Inteligente de Tomografia Cerebral com IA</h3>
-        <p>Detecção de Tumores</p>
+        <div class="head">
+          <img
+            src="{% static 'cerebro.png' %}"
+            alt="Logo"
+            style="height: 100px; margin-right: 10px"
+          />
+          <div>
+            <h3>(TAC) Encefálica por IA</h3>
+            <p>Detecção de Tumores</p>
+          </div>
+        </div>
 
-        <form
-          method="POST"
-          enctype="multipart/form-data"
-          action="/api/getDiagnosis/"
-          class="p-4 border rounded shadow-sm bg-light"
-        >
-          {% csrf_token %}
+        <div class="card-content">
+          <form
+            method="POST"
+            enctype="multipart/form-data"
+            action="/api/getDiagnosis/"
+            class="p-4 border rounded shadow-sm bg-light"
+          >
+            {% csrf_token %}
 
-          <!-- Upload -->
-          <div class="mb-4">
-            <label class="form-label"><strong>Upload de Imagem</strong></label>
-            <div
-              class="box-upload"
-              onclick="document.getElementById('uploadInput').click()"
-            >
-              <p class="text-muted">
-                Arraste e solte uma imagem do exame ou clique para selecionar
-              </p>
-              <p id="uploadText" class="text-muted">
-                Formatos: .dcm, .jpg, .png
-              </p>
+            <div class="mb-3">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  name="name"
+                  class="form-control"
+                  value=""
+                />
+              </div>
+              <div class="">
+                <input
+                  type="number"
+                  placeholder="Idade"
+                  name="age"
+                  class="form-control"
+                  value=""
+                />
+              </div>
+              <div class="mb-3">
+                <select name="gender" class="form-select">
+                  <option selected>Selecionar</option>
+                  <option>Feminino</option>
+                  <option>Masculino</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+            </div>
 
+            <!-- Upload -->
+            <div class="mb-3">
               <input
                 type="file"
                 id="uploadInput"
                 name="img"
                 accept=".dcm,.jpg,.png"
-                hidden
               />
             </div>
-          </div>
 
-          <div class="row mb-4">
-            <div class="col-md-4">
-              <input
-                type="text"
-                placeholder="Nome"
-                name="name"
-                class="form-control"
-                value=""
-              />
-            </div>
-            <div class="col-md-4">
-              <input
-                type="number"
-                placeholder="Idade"
-                name="age"
-                class="form-control"
-                value=""
-              />
-            </div>
-            <div class="col-md-4">
-              <select name="gender" class="form-select">
-                <option selected>Selecionar</option>
-                <option>Feminino</option>
-                <option>Masculino</option>
-                <option>Outro</option>
-              </select>
-            </div>
-          </div>
-
-          <button class="diagnose-btn btn btn-primary mt-3">
-            Analisar Tomografia
-          </button>
-        </form>
+            <button class="diagnose-btn btn btn-primary mt-3">
+              Analisar Tomografia
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-      document
-        .getElementById("uploadInput")
-        .addEventListener("change", function () {
-          const fileName = this.files[0]?.name || "Nenhum arquivo selecionado";
-          const uploadTextElement = document.getElementById("uploadText");
-          uploadTextElement.textContent = "Documento: " + fileName;
-
-          // Garantir que o texto tenha a cor preta e seja negrito
-          uploadTextElement.classList.add("bold-text");
-        });
-    </script>
   </body>
 </html>
