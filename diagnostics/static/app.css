@@ -26,6 +26,7 @@ body {
   color: white;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: auto;
   background-image: url(/static/wallpaper-neurology.jpg);
@@ -73,23 +74,17 @@ input[type="file"] {
 }
 
 .dashboard-container {
-  padding: 15px;
   display: flex;
   flex-direction: column;
   background-color: white;
+  align-items: center;
   align-items: center;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
-
-.deshboard-head {
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .result-content {
+  margin-top: 15px;
   width: 90%;
 }
 .inf {
