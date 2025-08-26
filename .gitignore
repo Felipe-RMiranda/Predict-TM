@@ -1,7 +1,25 @@
-venv/
-*.so
-*.h5
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+pip-log.txt
+
+# Django
+*.sqlite3
+*.log
+*.pot
+staticfiles/
+media/
 */migrations/
-.idea
+
+# Machine Learning models
+*.h5
+
+# IDEs
+.vscode/
+.idea/

@@ -1,5 +1,5 @@
 """
-ASGI config for egg_diagnosis_backend project.
+ASGI config for Predict-TM-GLobal-Setup project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'egg_diagnosis_backend.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Predict-TM-GLobal-Setup.settings')
 
 application = get_asgi_application()
