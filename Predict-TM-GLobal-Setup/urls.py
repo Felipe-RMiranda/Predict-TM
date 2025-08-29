@@ -22,6 +22,6 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', lambda request: redirect('upForm')),
+    path('', lambda request: redirect('renderHome')),
     path('api/', include('diagnostics.urls')),
 ]

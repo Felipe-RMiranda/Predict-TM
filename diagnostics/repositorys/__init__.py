@@ -1,0 +1,1 @@
+from .DiagnosisRepository import IDiagnosisRepository, DiagnosisRepository
