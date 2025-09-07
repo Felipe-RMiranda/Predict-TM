@@ -14,11 +14,13 @@ class IAIService(ABC):
 
 class AIService(IAIService):
     def __init__(self):
-        model_path = os.path.join('diagnostics', 'cnn_tumor_model.h5')
-        if not os.path.exists(model_path):
-            raise FileNotFoundError(f"❌ Modelo não encontrado em: {model_path}")
-        self.model = load_model(model_path)
-        logger.info("✅ Modelo carregado com sucesso.")
+        try:
+            model_path = os.path.join('diagnostics', 'cnn_tumor_model.h5')
+            self.model = load_model(model_path)
+            logger.info("✅ Modelo carregado com sucesso.")
+        except Exception as e:
+            logger.info(f"❌ Modelo não encontrado em: {model_path}\n[ERROR]: {e}")
+            #raise FileNotFoundError(f"❌ Modelo não encontrado em: {model_path}")
 
     @staticmethod
     def _img_process(img):
