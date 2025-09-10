@@ -20,7 +20,7 @@ class IRenders(ABC):
 class Renders(IRenders):
     def up_form(self, request): return render(request, 'up_form.html')
 
-    def render_home(self, request): return render(request, 'home_page.html')
+    def render_home(self, request): return render(request, 'index.html')
 
     def dashboard(self, request, diag,
                   service: IImgService = ImgService()):

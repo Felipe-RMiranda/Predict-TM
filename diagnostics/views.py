@@ -7,9 +7,13 @@ from django.conf import settings
 import os
 import logging
 from django.contrib.staticfiles.storage import staticfiles_storage
-from .services import IGenerateDiagnosesService, GenerateDiagnosesService, GetByName, IGetByName
+from .services import IGenerateDiagnosesService, GenerateDiagnosesService, GetByName, IGetByName, IRenders, Renders
 
 logger = logging.getLogger("django")
+
+@api_view(['GET'])
+def homePage(request, render: IRenders = Renders()):
+    return render.render_home(request=request)
 
 @api_view(['POST'])
 def diagnosis_generation(request, diagnoses: IGenerateDiagnosesService = GenerateDiagnosesService()):

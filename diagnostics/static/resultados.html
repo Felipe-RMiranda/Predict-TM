@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NeuroScan • Resultados</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#1B2031; --surface:#ffffff; --surface-alt:#ffffff; --text:#0f172a;
+       --muted:#000000; --border:#1B2031; --accent:#2563eb; --accent-700:#1d4ed8;
+      --ok:#22c55e; --danger:#ef4444; --rail:#e5e7eb; --shadow:0 8px 20px rgba(2,6,23,.06);
+      --radius:14px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.4;padding:24px}
+    .container{max-width:1200px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    header{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:18px 22px;background:var(--surface-alt);border-bottom:1px solid var(--border)}
+    h1{margin:0 auto;font-size:1.6rem;color:var(--accent);font-weight:700;letter-spacing:.2px}
+    a.btn{text-decoration:none;background:var(--accent);color:#fff;padding:10px 16px;border-radius:999px;font-weight:600;box-shadow:0 4px 12px rgba(37,99,235,.25);transition:background .15s ease,transform .05s ease}
+    a.btn:hover{background:var(--accent-700)} a.btn:active{transform:translateY(1px)}
+    .content{padding:26px}
+    .patient{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+    .label{color:var(--muted);font-size:.95rem;margin-bottom:4px}
+    .value{font-weight:700}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .title{color:var(--accent);font-size:1.1rem;font-weight:700;margin-bottom:12px;text-align:center}
+    .image-preview{height:320px;border-radius:10px;background:var(--surface-alt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+    .image-preview img{max-width:100%;max-height:100%;object-fit:contain}
+    .legend{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:10px;color:var(--muted);font-size:.95rem}
+    .legend .dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px}
+    .priority-list{list-style:none;margin:0;padding:0}
+    .priority-list li{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface-alt)}
+    .priority-list li + li{margin-top:10px}
+    
+    /* Cores atualizadas para as prioridades */
+    .high {
+      border-left: 6px solid #ef4444;
+      background: #ef444426 !important;
+    }
+    .medium {
+      border-left: 6px solid #f59e0b;
+      background: #F59E0B26 !important;
+    }
+    .low {
+      border-left: 6px solid #22c55e;
+      background: #22C55E26 !important;
+    }
+    
+    .badge{padding:4px 10px;border-radius:999px;font-weight:700;color:#fff}
+    .bh{background:#ef4444}.bm{background:#f59e0b}.bl{background:#22c55e}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}.patient{grid-template-columns:1fr}}
+
+    /* Gauge */
+    .gauge-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .gauge-wrap {
+      position: relative;
+      width: 300px;
+      height: 160px;
+      margin-bottom: 10px;
+    }
+    
+    .gauge-values {
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--text);
+      font-size: 1.2rem;
+    }
+    
+    .risk-level {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    
+    .risk-low { color: var(--ok); }
+    .risk-medium { color: #f59e0b; }
+    .risk-high { color: var(--danger); }
+    
+    .legend.compact {
+      justify-content: center;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="btn" href="/"><i class="fas fa-arrow-left"></i> Voltar</a>
+      <h1><i class="fas fa-brain"></i> Resultados da Análise</h1>
+      <span></span>
+    </header>
+
+    <div class="content">
+      <!-- Ficha do paciente -->
+      <div class="patient">
+        <div class="card"><div class="label"><i class="fas fa-user"></i> Nome do Paciente</div><div class="value" id="nomePaciente">—</div></div>
+        <div class="card"><div class="label"><i class="fas fa-birthday-cake"></i> Idade</div><div class="value" id="idadePaciente">—</div></div>
+        <div class="card"><div class="label"><i class="fas fa-calendar"></i> Data do Exame</div><div class="value" id="dataExame">—</div></div>
+        <div class="card"><div class="label"><i class="fas fa-user-md"></i> Médico Solicitante</div><div class="value" id="medicoSolicitante">—</div></div>
+      </div>
+
+      <div class="grid">
+        <!-- Imagem -->
+        <div class="card">
+          <div class="title"><i class="fas fa-image"></i> Cérebro — Tomografia</div>
+          <div class="image-preview">
+            <img id="brainImg" src="https://via.placeholder.com/500x320/ffffff/0f172a?text=Imagem+do+C%C3%A9rebro" alt="Imagem do cérebro">
+          </div>
+        </div>
+
+        <!-- Gauge de AVC -->
+        <div class="card">
+          <div class="title"><i class="fas fa-heartbeat"></i> Probabilidade de AVC</div>
+          
+          <div class="gauge-container">
+            <div class="gauge-wrap">
+              <canvas id="gaugeCanvas" width="300" height="160"></canvas>
+            </div>
+            
+            <div id="gaugeValues" class="gauge-values">AVC: 10% • Não AVC: 90%</div>
+            
+            <div id="riskLevel" class="risk-level risk-low">
+              <i class="fas fa-check-circle"></i> Risco Baixo
+            </div>
+            
+            <div class="legend compact">
+              <span><span class="dot" style="background:var(--ok)"></span>Não AVC</span>
+              <span><span class="dot" style="background:var(--danger)"></span>AVC</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  
+
+      <div class="card" style="margin-top:18px">
+        <div class="title" style="text-align:left"><i class="fas fa-tasks"></i> Prioridade de Atendimento</div>
+        <ul class="priority-list">
+          <li class="high"><span>Emergência - Necessita atendimento imediato</span><span class="badge bh">ALTA</span></li>
+          <li class="medium"><span>Urgência - Necessita prioridade mas pode aguardar</span><span class="badge bm">MÉDIA</span></li>
+          <li class="low"><span>Não urgente - Pode aguardar atendimento padrão</span><span class="badge bl">BAIXA</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* 1) Carrega imagem */
+    (function loadBrainImage(){
+      try{
+        const dataURL = localStorage.getItem('neuroscan_image');
+        if (dataURL) document.getElementById('brainImg').src = dataURL;
+      } catch(e){ console.warn('Não foi possível recuperar a imagem:', e); }
+    })();
+
+    /* 2) Preenche ficha */
+    function brDate(iso){ if(!iso) return "—"; const [y,m,d]=iso.split("-"); return (y&&m&&d)? `${d}/${m}/${y}`: iso; }
+    (function carregarPaciente(){
+      try{
+        const raw = localStorage.getItem("neuroscan_paciente");
+        if (!raw) return;
+        const p = JSON.parse(raw);
+        const byId = id => document.getElementById(id);
+        byId("nomePaciente").textContent   = (p.nome||"").trim() || "—";
+        byId("idadePaciente").textContent  = p.idade ? `${p.idade} anos` : "—";
+        byId("dataExame").textContent      = brDate(p.dataExame);
+        byId("medicoSolicitante").textContent = (p.medico||"").trim() || "—";
+      } catch(e){ console.warn("Falha ao carregar dados do paciente:", e); }
+    })();
+
+    /* 3) Gauge de AVC usando Canvas */
+    function drawGauge(percentage) {
+      const canvas = document.getElementById('gaugeCanvas');
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      const centerX = width / 2;
+      const centerY = height;
+      const radius = Math.min(width, height) * 0.9;
+      
+      // Limpar canvas
+      ctx.clearRect(0, 0, width, height);
+      
+      // Desenhar fundo do gauge
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, Math.PI, 2 * Math.PI, false);
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = '#e5e7eb';
+      ctx.stroke();
+      
+      // Desenhar zonas coloridas
+      const startAngle = Math.PI;
+      const endAngle = 2 * Math.PI;
+      const angleRange = endAngle - startAngle;
+      
+      // Zona verde (0-70%)
+      const greenEnd = startAngle + angleRange * 0.7;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, startAngle, greenEnd, false);
+      ctx.lineWidth = 15;
+      ctx.strokeStyle = '#22c55e';
+      ctx.stroke();
+      
+      // Zona amarela (70-85%)
+      const yellowEnd = startAngle + angleRange * 0.85;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, greenEnd, yellowEnd, false);
+      ctx.lineWidth = 15;
+      ctx.strokeStyle = '#f59e0b';
+      ctx.stroke();
+      
+      // Zona vermelha (85-100%)
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, yellowEnd, endAngle, false);
+      ctx.lineWidth = 15;
+      ctx.strokeStyle = '#ef4444';
+      ctx.stroke();
+      
+      // Desenhar marcadores
+      for (let i = 0; i <= 10; i++) {
+        const angle = startAngle + (i / 10) * angleRange;
+        const isMajor = i % 5 === 0;
+        const markerLength = isMajor ? 15 : 8;
+        
+        ctx.beginPath();
+        const x1 = centerX + (radius - markerLength) * Math.cos(angle);
+        const y1 = centerY + (radius - markerLength) * Math.sin(angle);
+        const x2 = centerX + radius * Math.cos(angle);
+        const y2 = centerY + radius * Math.sin(angle);
+        
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.lineWidth = isMajor ? 2 : 1;
+        ctx.strokeStyle = '#475569';
+        ctx.stroke();
+        
+        // Adicionar números nos marcadores principais
+        if (isMajor) {
+          const textRadius = radius - 25;
+          const textX = centerX + textRadius * Math.cos(angle);
+          const textY = centerY + textRadius * Math.sin(angle) + 5;
+          
+          ctx.font = '12px Inter';
+          ctx.fillStyle = '#475569';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText((i * 10).toString(), textX, textY);
+        }
+      }
+      
+      // Desenhar ponteiro
+      const pointerAngle = startAngle + (percentage / 100) * angleRange;
+      const pointerLength = radius - 20;
+      
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.lineTo(
+        centerX + pointerLength * Math.cos(pointerAngle),
+        centerY + pointerLength * Math.sin(pointerAngle)
+      );
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#1f2937';
+      ctx.stroke();
+      
+      // Desenhar centro do ponteiro
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 8, 0, 2 * Math.PI, false);
+      ctx.fillStyle = '#1f2937';
+      ctx.fill();
+    }
+
+    function setRiskLevel(probability) {
+      const riskElement = document.getElementById('riskLevel');
+      let riskClass, riskText, riskIcon;
+      
+      if (probability <= 30) {
+        riskClass = 'risk-low';
+        riskText = 'Risco Baixo';
+        riskIcon = 'fa-check-circle';
+      } else if (probability <= 70) {
+        riskClass = 'risk-medium';
+        riskText = 'Risco Moderado';
+        riskIcon = 'fa-exclamation-circle';
+      } else {
+        riskClass = 'risk-high';
+        riskText = 'Risco Alto';
+        riskIcon = 'fa-exclamation-triangle';
+      }
+      
+      riskElement.className = `risk-level ${riskClass}`;
+      riskElement.innerHTML = `<i class="fas ${riskIcon}"></i> ${riskText}`;
+    }
+
+    (function initGauge(){
+      const saved = localStorage.getItem('neuroscan_avc_prob');
+      const prob = saved ? Number(saved) : 10; // fallback visual
+      
+      // Atualizar valores textuais
+      document.getElementById('gaugeValues').textContent =
+        `AVC: ${prob.toFixed(0)}% • Não AVC: ${(100-prob).toFixed(0)}%`;
+      
+      // Definir nível de risco
+      setRiskLevel(prob);
+      
+      // Desenhar the gauge
+      drawGauge(prob);
+    })();
+  </script>
+</body>
+</html>

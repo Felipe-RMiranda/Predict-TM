@@ -5,9 +5,10 @@ from . import views
 from .services.Renders import Renders, IRenders
 
 router = DefaultRouter()
+### Remover REders daqui
 render: IRenders = Renders()
 urlpatterns = [
-    path('', render.render_home, name='renderHome'),
+    path('', views.homePage, name='renderHome'),
     path('getDiagnosisByName/', views.get_diagnosis_by_name, name='getDiagnosisByName'),
     path('upForm/', render.up_form, name='upForm'),
     path('diagnosisGeneration/', views.diagnosis_generation, name='diagnosisGeneration'),
