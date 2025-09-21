@@ -4,6 +4,8 @@ class Diagnosis(models.Model):
     name = models.CharField(max_length=100, unique=True)
     age = models.IntegerField()
     gender = models.CharField(max_length=20)
+    exam_date = models.DateField()
+    doctor_name = models.CharField(max_length=100)
     img = models.BinaryField()
     probability = models.FloatField()
     status = models.CharField(max_length=50)

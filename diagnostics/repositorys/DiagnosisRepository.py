@@ -17,13 +17,15 @@ class IDiagnosisRepository(ABC):
         pass
 
 class DiagnosisRepository(IDiagnosisRepository):
-    def save(self, name, age, gender, img_bytes, probability, status_c, result):
+    def save(self, name, age, gender, exam_date, doctor_name, img_bytes, probability, status_c, result):
         try:
             diag, _ = Diagnosis.objects.update_or_create(
                 name=name,
                 defaults={
                     'age': int(age),
                     'gender': gender,
+                    'exam_date': exam_date,
+                    'doctor_name': doctor_name,
                     'img': img_bytes,
                     'probability': probability,
                     'status': status_c,

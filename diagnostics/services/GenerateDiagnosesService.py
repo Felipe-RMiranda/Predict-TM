@@ -18,13 +18,15 @@ class IGenerateDiagnosesService(ABC):
 
 class GenerateDiagnosesService(IGenerateDiagnosesService):
     @staticmethod
-    def _predict(img, service: IAIService = AIService()):
+    def _predict(img, service: IAIService = None):
+        if service is None:
+            service = AIService()
         return service.img_predict(img)
 
     @staticmethod
-    def _save(name, age, gender, img_bytes, prob, status_c, result,
+    def _save(name, age, gender, exam_date, doctor_name, img_bytes, prob, status_c, result,
               repo: IDiagnosisRepository = DiagnosisRepository()):
-        repo.save(name, age, gender, img_bytes, prob, status_c, result)
+        repo.save(name, age, gender, exam_date, doctor_name, img_bytes, prob, status_c, result)
         return repo.get_by_name(name)
 
     def generete(self, request, render: IRenders = Renders()):
@@ -35,12 +37,14 @@ class GenerateDiagnosesService(IGenerateDiagnosesService):
                 name = data["name"]
                 age = data["age"]
                 gender = data["gender"]
+                exam_date = data["exam_date"]
+                doctor_name = data["doctor_name"]
                 img = data["img"]
 
                 img_bytes = img.read()
                 prob, result, status_c = self._predict(img_bytes)
 
-                diag = self._save(name, age, gender, img_bytes, prob, status_c, result)
+                diag = self._save(name, age, gender, exam_date, doctor_name, img_bytes, prob, status_c, result)
                 return render.dashboard(request, diag)
             else:
                 return JsonResponse({"success": False, "message": "preencha todos os campos" })
